@@ -5,8 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+{% extends 'base.html' %}
+{% block content %}
 <div class="container my-3">
     <h1 class="border-bottom py-2">{{ task.title }}</h1>
     <div>
@@ -43,5 +43,6 @@
         <input type="submit" value="등록" class="btn btn-dark">
     </form>
 </div>
+{% endblock %}
 </body>
 </html>
