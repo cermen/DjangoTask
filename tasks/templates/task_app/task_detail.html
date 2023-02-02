@@ -12,5 +12,24 @@
         <li>종료일: {{ task.end_date }}</li>
     </ul>
 </div>
+<h4>메모</h4>
+<div>
+    {% if task.memo_set.count %}
+    <ul>
+        {% for memo in task.memo_set.all %}
+        <li>{{ memo.content }} - {{ memo.create_date }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div>메모가 없습니다.</div>
+    {% endif %}
+</div>
+<br>
+<div>메모하기</div>
+<form action="{% url 'task_app:memo_create' task.id %}" method="post">
+    {% csrf_token %}
+    <textarea name="memo" id="memo" rows="15"></textarea>
+    <input type="submit" value="등록">
+</form>
 </body>
 </html>
