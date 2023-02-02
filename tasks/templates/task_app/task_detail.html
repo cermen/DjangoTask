@@ -6,32 +6,42 @@
 </head>
 <body>
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-<h1>{{ task.title }}</h1>
-<div>
-    <ul>
-        <li>시작일: {{ task.start_date }}</li>
-        <li>종료일: {{ task.end_date }}</li>
-    </ul>
-</div>
-<h4>메모</h4>
-<div>
-    {% if task.memo_set.count %}
-    <ul>
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+<div class="container my-3">
+    <h1 class="border-bottom py-2">{{ task.title }}</h1>
+    <div>
+        <ul>
+            <li>시작일: {{ task.start_date }}</li>
+            <li>종료일: {{ task.end_date }}</li>
+        </ul>
+    </div>
+    <h4>메모</h4>
+    <div>
+        {% if task.memo_set.count %}
         {% for memo in task.memo_set.all %}
-        <li>{{ memo.content }} - {{ memo.create_date }}</li>
+        <div class="col">
+            <div class="card my-3">
+                <div class="card-body">
+                    <p class="card-text">{{ memo.content }}</p>
+                    <span class="badge bg-light">
+                    <small class="text-muted">{{ memo.create_date }}</small>
+                </span>
+                </div>
+            </div>
+        </div>
         {% endfor %}
-    </ul>
-    {% else %}
-    <div>메모가 없습니다.</div>
-    {% endif %}
+        {% else %}
+        <div>메모가 없습니다.</div>
+        {% endif %}
+    </div>
+    <form action="{% url 'task_app:memo_create' task.id %}" method="post" class="my-3">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="memo" class="form-label">메모하기</label>
+            <textarea name="memo" id="memo" class="form-control" rows="10"></textarea>
+        </div>
+        <input type="submit" value="등록" class="btn btn-dark">
+    </form>
 </div>
-<br>
-<div>메모하기</div>
-<form action="{% url 'task_app:memo_create' task.id %}" method="post">
-    {% csrf_token %}
-    <textarea name="memo" id="memo" rows="15"></textarea>
-    <input type="submit" value="등록">
-</form>
 </body>
 </html>
