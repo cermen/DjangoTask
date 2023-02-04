@@ -3,12 +3,16 @@ from django.utils import timezone
 from .models import Task
 from django.http import HttpResponseNotAllowed
 from .forms import TaskForm, MemoForm
+from django.core.paginator import Paginator
 
 
 # Create your views here.
 def index(request):
+    page = request.GET.get('page', '1')
     task_list = Task.objects.order_by('id')
-    context = {'task_list': task_list}
+    paginator = Paginator(task_list, 10)
+    page_obj = paginator.get_page(page)
+    context = {'task_list': page_obj}
     return render(request, 'task_app/task_list.html', context)
 
 
