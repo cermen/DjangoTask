@@ -36,9 +36,21 @@
     </div>
     <form action="{% url 'task_app:memo_create' task.id %}" method="post" class="my-3">
         {% csrf_token %}
+        {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for field in form %}
+            {% if field.errors %}
+            <div>
+                <strong>{{ field.label }}</strong>
+                {{ field.errors }}
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
         <div class="mb-3">
-            <label for="memo" class="form-label">메모하기</label>
-            <textarea name="memo" id="memo" class="form-control" rows="10"></textarea>
+            <label for="content" class="form-label">메모하기</label>
+            <textarea name="content" id="content" class="form-control" rows="10"></textarea>
         </div>
         <input type="submit" value="등록" class="btn btn-dark">
     </form>
