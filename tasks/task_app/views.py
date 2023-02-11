@@ -1,16 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Task
-from django.http import HttpResponseNotAllowed
 from .forms import TaskForm, MemoForm
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
 def index(request):
     page = request.GET.get('page', '1')
     task_list = Task.objects.order_by('id')
-    paginator = Paginator(task_list, 10)
+    paginator = Paginator(task_list, 15)
     page_obj = paginator.get_page(page)
     context = {'task_list': page_obj}
     return render(request, 'task_app/task_list.html', context)
@@ -22,27 +22,32 @@ def detail(request, task_id):
     return render(request, 'task_app/task_detail.html', context)
 
 
+@login_required(login_url='common:login')
 def memo_create(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
     if request.method == 'POST':
         form = MemoForm(request.POST)
         if form.is_valid():
             memo = form.save(commit=False)
+            print(request)
+            memo.author = request.user
             memo.create_date = timezone.now()
             memo.task = task
             memo.save()
             return redirect('task_app:detail', task_id=task.id)
     else:
-        return HttpResponseNotAllowed('Only POST is possible.')
+        form = MemoForm()
     context = {'task': task, 'form': form}
     return render(request, 'task_app/task_detail.html', context)
 
 
+@login_required(login_url='common:login')
 def task_create(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
             task = form.save(commit=False)
+            task.author = request.user
             task.save()
             return redirect('task_app:index')
     else:
