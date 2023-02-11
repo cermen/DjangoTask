@@ -7,9 +7,10 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+@login_required(login_url='common:login')
 def index(request):
     page = request.GET.get('page', '1')
-    task_list = Task.objects.order_by('id')
+    task_list = Task.objects.filter(author=request.user.id).order_by('id')
     paginator = Paginator(task_list, 15)
     page_obj = paginator.get_page(page)
     context = {'task_list': page_obj}
@@ -29,7 +30,6 @@ def memo_create(request, task_id):
         form = MemoForm(request.POST)
         if form.is_valid():
             memo = form.save(commit=False)
-            print(request)
             memo.author = request.user
             memo.create_date = timezone.now()
             memo.task = task
