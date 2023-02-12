@@ -16,7 +16,7 @@
         </ul>
         <div class="my-3">
             <a href="{% url 'task_app:task_modify' task.id  %}"
-               class="btn btn-sm btn-outline-secondary">수정</a>
+               class="btn btn-sm btn-outline-primary">수정</a>
             <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-danger"
                data-uri="{% url 'task_app:task_delete' task.id  %}">삭제</a>
         </div>
@@ -30,8 +30,10 @@
                 <div class="card-body">
                     <p class="card-text">{{ memo.content }}</p>
                     <span class="badge bg-light">
-                    <small class="text-muted">{{ memo.create_date }}</small>
-                </span>
+                        <small class="text-muted">{{ memo.create_date }}</small>
+                    </span>
+                    <a href="{% url 'task_app:memo_modify' memo.id  %}"
+                       class="btn btn-sm btn-outline-secondary">수정</a>
                 </div>
             </div>
         </div>
@@ -70,7 +72,8 @@
         element.addEventListener('click', function () {
             if (confirm("정말로 삭제하시겠습니까?")) {
                 location.href = this.dataset.uri;
-            };
+            }
+            ;
         });
     });
 </script>
