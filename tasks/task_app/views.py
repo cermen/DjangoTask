@@ -92,3 +92,10 @@ def memo_modify(request, memo_id):
     else:
         form = MemoForm(instance=memo)
     return render(request, 'task_app/memo_form.html', {'form': form})
+
+
+@login_required(login_url='common:login')
+def memo_delete(request, memo_id):
+    memo = get_object_or_404(Memo, pk=memo_id)
+    memo.delete()
+    return redirect('task_app:detail', task_id=memo.task.id)

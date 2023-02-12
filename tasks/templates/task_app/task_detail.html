@@ -34,6 +34,8 @@
                     </span>
                     <a href="{% url 'task_app:memo_modify' memo.id  %}"
                        class="btn btn-sm btn-outline-secondary">수정</a>
+                    <a href="#" class="delete btn btn-sm btn-outline-danger"
+                       data-uri="{% url 'task_app:memo_delete' memo.id  %}">삭제</a>
                 </div>
             </div>
         </div>
