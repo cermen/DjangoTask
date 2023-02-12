@@ -69,3 +69,10 @@ def task_modify(request, task_id):
     else:
         form = TaskForm()
     return render(request, 'task_app/task_form.html', {'form': form})
+
+
+@login_required(login_url='common:login')
+def task_delete(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+    task.delete()
+    return redirect('task_app:index')
