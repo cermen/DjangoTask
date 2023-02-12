@@ -14,6 +14,10 @@
             <li>시작일: {{ task.start_date }}</li>
             <li>종료일: {{ task.end_date }}</li>
         </ul>
+        <div class="my-3">
+            <a href="{% url 'task_app:task_modify' task.id  %}"
+               class="btn btn-sm btn-outline-secondary">수정</a>
+        </div>
     </div>
     <h4>메모</h4>
     <div>

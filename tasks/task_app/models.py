@@ -17,3 +17,4 @@ class Memo(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     content = models.TextField()
     create_date = models.DateTimeField()
+    modify_date = models.DateTimeField(null=True, blank=True)
