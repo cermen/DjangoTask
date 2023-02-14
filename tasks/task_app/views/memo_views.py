@@ -45,3 +45,11 @@ def memo_delete(request, memo_id):
     memo = get_object_or_404(Memo, pk=memo_id)
     memo.delete()
     return redirect('task_app:detail', task_id=memo.task.id)
+
+
+@login_required(login_url='common:login')
+def memo_important(request, memo_id):
+    memo = get_object_or_404(Memo, pk=memo_id)
+    memo.important = not memo.important
+    memo.save()
+    return redirect('task_app:detail', task_id=memo.task.id)

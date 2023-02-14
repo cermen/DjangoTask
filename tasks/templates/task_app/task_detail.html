@@ -7,8 +7,18 @@
 <body>
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
 <div class="container my-3">
-    <h1 class="border-bottom py-2">{{ task.title }}</h1>
+    <div>
+        <span class="fs-2">{{ task.title }}</span>
+        <span>
+            {% if task.important %}
+            <img src="{% static 'task_app/star.png' %}" width="24">
+            {% else %}
+            <img src="{% static 'task_app/star_unactivated.png' %}" width="24"></a>
+            {% endif %}
+        </span>
+    </div>
     <div>
         <ul>
             <li>시작일: {{ task.start_date }}</li>
@@ -32,10 +42,19 @@
                     <span class="badge bg-light">
                         <small class="text-muted">{{ memo.create_date }}</small>
                     </span>
-                    <a href="{% url 'task_app:memo_modify' memo.id  %}"
-                       class="btn btn-sm btn-outline-secondary">수정</a>
-                    <a href="#" class="delete btn btn-sm btn-outline-danger"
-                       data-uri="{% url 'task_app:memo_delete' memo.id  %}">삭제</a>
+                    {% if memo.important %}
+                    <a href="{% url 'task_app:memo_important' memo.id %}"><img src="{% static 'task_app/star.png' %}"
+                                                                               width="16"></a>
+                    {% else %}
+                    <a href="{% url 'task_app:memo_important' memo.id %}"><img
+                            src="{% static 'task_app/star_unactivated.png' %}" width="16"></a>
+                    {% endif %}
+                    <div class="mt-3">
+                        <a href="{% url 'task_app:memo_modify' memo.id  %}"
+                           class="btn btn-sm btn-outline-secondary">수정</a>
+                        <a href="#" class="delete btn btn-sm btn-outline-danger"
+                           data-uri="{% url 'task_app:memo_delete' memo.id  %}">삭제</a>
+                    </div>
                 </div>
             </div>
         </div>

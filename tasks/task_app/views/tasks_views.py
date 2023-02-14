@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 
 from ..models import Task
 from ..forms import TaskForm
@@ -39,4 +40,13 @@ def task_modify(request, task_id):
 def task_delete(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
     task.delete()
+    return redirect('task_app:index')
+
+
+@login_required(login_url='common:login')
+def task_important(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+    task.important = not task.important
+    task.save()
+    print(request.path_info)
     return redirect('task_app:index')

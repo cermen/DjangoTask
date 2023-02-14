@@ -13,8 +13,10 @@ urlpatterns = [
     path('task/create/', tasks_views.task_create, name='task_create'),
     path('task/modify/<int:task_id>', tasks_views.task_modify, name='task_modify'),
     path('task/delete/<int:task_id>', tasks_views.task_delete, name='task_delete'),
+    path('task/important/<int:task_id>', tasks_views.task_important, name='task_important'),
 
     path('memo/create/<int:task_id>', memo_views.memo_create, name='memo_create'),
     path('memo/modify/<int:memo_id>', memo_views.memo_modify, name='memo_modify'),
-    path('memo/delete/<int:memo_id>', memo_views.memo_delete, name='memo_delete')
+    path('memo/delete/<int:memo_id>', memo_views.memo_delete, name='memo_delete'),
+    path('memo/important/<int:memo_id>', memo_views.memo_important, name='memo_important')
 ]

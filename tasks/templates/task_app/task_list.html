@@ -7,6 +7,7 @@
 <body>
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
 <div class="container my-3">
     <h1>할 일 목록</h1>
     <table class="table table-striped">
@@ -23,8 +24,10 @@
         <tr>
             <td>
                 <a href="{% url 'task_app:detail' task.id %}">{{ task.title }}</a>
-                {% if task.memo_set.count > 0 %}
-                <span class="text-danger small mx-2">{{ task.memo_set.count }}</span>
+                {% if task.important %}
+                <a href="{% url 'task_app:task_important' task.id %}"><img src="{% static 'task_app/star.png' %}" width="16"></a>
+                {% else %}
+                <a href="{% url 'task_app:task_important' task.id %}"><img src="{% static 'task_app/star_unactivated.png' %}" width="16"></a>
                 {% endif %}
             </td>
             <td>{{ task.start_date }}</td>
