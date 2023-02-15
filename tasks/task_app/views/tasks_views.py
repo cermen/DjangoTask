@@ -48,5 +48,4 @@ def task_important(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
     task.important = not task.important
     task.save()
-    print(request.path_info)
     return redirect('task_app:index')

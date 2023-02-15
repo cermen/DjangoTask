@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 
@@ -17,7 +17,8 @@ def memo_create(request, task_id):
             memo.create_date = timezone.now()
             memo.task = task
             memo.save()
-            return redirect('task_app:detail', task_id=task.id)
+            return redirect('{}#memo_{}'.format(
+                resolve_url('task_app:detail', task_id=task.id), memo.id))
     else:
         form = MemoForm()
     context = {'task': task, 'form': form}
@@ -34,7 +35,8 @@ def memo_modify(request, memo_id):
             memo.id = memo_id
             memo.modify_date = timezone.now()
             memo.save()
-            return redirect('task_app:detail', task_id=memo.task.id)
+            return redirect('{}#memo_{}'.format(
+                resolve_url('task_app:detail', task_id=task.id), memo.id))
     else:
         form = MemoForm(instance=memo)
     return render(request, 'task_app/memo_form.html', {'form': form})
