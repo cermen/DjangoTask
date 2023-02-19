@@ -25,13 +25,12 @@ SECRET_KEY = 'django-insecure-d--n!$65=!gu#li#-09p&5i2$54h@e88iv^3_3_&44^poef&##
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '3.37.102.93']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'debug_toolbar',
     'common.apps.CommonConfig',
     'task_app.apps.TaskAppConfig',
     'django.contrib.admin',
@@ -49,8 +48,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 INTERNAL_IPS = ('127.0.0.1',)
